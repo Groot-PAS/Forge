@@ -4,7 +4,6 @@
 
   [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
   [![LangGraph](https://img.shields.io/badge/LangGraph-Powered-orange.svg)](https://github.com/langchain-ai/langgraph)
-  [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 </div>
 
 ---
