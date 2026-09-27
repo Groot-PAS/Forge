@@ -1,0 +1,174 @@
+/*
+ * Calculator UI Styles
+ * Responsive, clean, and theme‑friendly styling.
+ * Matches the class names used in index.html.
+ */
+
+/* ------------------------------------------------------------
+ * Root variables – easy theming & high‑contrast friendliness
+ * ------------------------------------------------------------ */
+:root {
+  /* Colours – using HSL for easy adjustments and good contrast */
+  --bg-color: hsl(0, 0%, 100%);               /* page background */
+  --calc-bg: hsl(0, 0%, 96%);                /* calculator surface */
+  --display-bg: hsl(0, 0%, 92%);             /* display background */
+  --btn-bg: hsl(220, 90%, 55%);              /* default button colour (blue) */
+  --btn-hover: hsl(220, 90%, 45%);
+  --operator-bg: hsl(30, 90%, 55%);          /* operators colour (orange) */
+  --operator-hover: hsl(30, 90%, 45%);
+  --control-bg: hsl(0, 0%, 70%);            /* clear / backspace (grey) */
+  --control-hover: hsl(0, 0%, 55%);
+  --equals-bg: hsl(120, 60%, 45%);           /* equals button (green) */
+  --equals-hover: hsl(120, 60%, 35%);
+  --text-color: hsl(0, 0%, 10%);
+
+  /* Sizing */
+  --font-base: 1rem;
+  --font-display: 4vw;   /* scales with viewport – min‑max handled later */
+  --font-btn: 1.2rem;
+  --spacing: 0.75rem;
+  --border-radius: 0.5rem;
+  --btn-height: 3rem;
+}
+
+/* ------------------------------------------------------------
+ * Global resets & base styling
+ * ------------------------------------------------------------ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: var(--font-base);
+  background: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* ------------------------------------------------------------
+ * Calculator container
+ * ------------------------------------------------------------ */
+.calculator {
+  background: var(--calc-bg);
+  max-width: 420px;
+  width: 100%;
+  padding: var(--spacing);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+}
+
+/* ------------------------------------------------------------
+ * Display – read‑only input
+ * ------------------------------------------------------------ */
+.calculator-display {
+  width: 100%;
+  font-size: clamp(1.5rem, var(--font-display), 2.5rem);
+  text-align: right;
+  padding: var(--spacing);
+  background: var(--display-bg);
+  border: none;
+  border-radius: calc(var(--border-radius) / 2);
+  color: var(--text-color);
+}
+
+.calculator-display:focus {
+  outline: none;
+}
+
+/* ------------------------------------------------------------
+ * Buttons grid layout
+ * ------------------------------------------------------------ */
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+/* ------------------------------------------------------------
+ * Base button styling
+ * ------------------------------------------------------------ */
+.btn {
+  height: var(--btn-height);
+  font-size: var(--font-btn);
+  font-weight: 600;
+  color: #fff;
+  background: var(--btn-bg);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover,
+.btn:focus {
+  background: var(--btn-hover);
+  outline: none;
+  transform: translateY(1px);
+}
+
+/* ------------------------------------------------------------
+ * Operator button variant
+ * ------------------------------------------------------------ */
+.btn-operator {
+  background: var(--operator-bg);
+}
+
+.btn-operator:hover,
+.btn-operator:focus {
+  background: var(--operator-hover);
+}
+
+/* ------------------------------------------------------------
+ * Equals button – treat as operator with distinct colour
+ * ------------------------------------------------------------ */
+.btn-operator[data-key="="] {
+  background: var(--equals-bg);
+}
+
+.btn-operator[data-key="="]:hover,
+.btn-operator[data-key="="]:focus {
+  background: var(--equals-hover);
+}
+
+/* ------------------------------------------------------------
+ * Control button variant (clear, backspace)
+ * ------------------------------------------------------------ */
+.btn-control {
+  background: var(--control-bg);
+}
+
+.btn-control:hover,
+.btn-control:focus {
+  background: var(--control-hover);
+}
+
+/* ------------------------------------------------------------
+ * Zero button – span two columns for better layout
+ * ------------------------------------------------------------ */
+.btn[data-key="0"] {
+  grid-column: span 2;
+}
+
+/* ------------------------------------------------------------
+ * Media query – mobile adjustments (<600px)
+ * ------------------------------------------------------------ */
+@media (max-width: 600px) {
+  :root {
+    --spacing: 0.5rem;
+    --font-btn: 1rem;
+    --btn-height: 2.5rem;
+  }
+
+  .calculator {
+    padding: var(--spacing);
+    gap: var(--spacing);
+  }
+}

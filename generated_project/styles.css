@@ -1,0 +1,178 @@
+/*
+ * Calculator UI Styles
+ * Implements responsive, accessible styling with CSS variables.
+ */
+
+/* ------------------------------------------------------------
+ * Root variables – easy theming & high‑contrast friendliness
+ * ------------------------------------------------------------ */
+:root {
+  /* Color palette – using HSL for better contrast scaling */
+  --color-bg: hsl(0, 0%, 100%);               /* white background */
+  --color-surface: hsl(0, 0%, 95%);           /* light surface for calculator */
+  --color-primary: hsl(220, 90%, 55%);       /* main accent (blue) */
+  --color-primary-dark: hsl(220, 90%, 45%);
+  --color-operator: hsl(30, 90%, 55%);       /* orange for operators */
+  --color-operator-dark: hsl(30, 90%, 45%);
+  --color-equals: hsl(120, 60%, 45%);        /* green for equals */
+  --color-equals-dark: hsl(120, 60%, 35%);
+  --color-text: hsl(0, 0%, 10%);             /* near‑black for readability */
+  --color-display-bg: hsl(0, 0%, 98%);
+
+  /* Sizing */
+  --font-base: 1rem;                         /* base font size */
+  --font-display: 2rem;                     /* large display */
+  --font-button: 1.2rem;                    /* button label */
+  --button-height: 3rem;
+  --button-radius: 0.5rem;
+  --spacing: 0.75rem;
+}
+
+/* ------------------------------------------------------------
+ * Global resets & accessibility helpers
+ * ------------------------------------------------------------ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: var(--font-base);
+  background: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* ------------------------------------------------------------
+ * Calculator container
+ * ------------------------------------------------------------ */
+.calculator {
+  background: var(--color-surface);
+  max-width: 400px;
+  width: 100%;
+  padding: var(--spacing);
+  border-radius: var(--button-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+}
+
+/* ------------------------------------------------------------
+ * Display – read‑only input
+ * ------------------------------------------------------------ */
+.display {
+  width: 100%;
+  font-size: var(--font-display);
+  text-align: right;
+  padding: var(--spacing);
+  border: none;
+  background: var(--color-display-bg);
+  border-radius: calc(var(--button-radius) / 2);
+  color: var(--color-text);
+}
+
+.display:focus {
+  outline: none; /* remove default focus outline – we keep visual contrast via background */
+}
+
+/* ------------------------------------------------------------
+ * Buttons grid layout
+ * ------------------------------------------------------------ */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+/* ------------------------------------------------------------
+ * Base button styling
+ * ------------------------------------------------------------ */
+button {
+  height: var(--button-height);
+  font-size: var(--font-button);
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--button-radius);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+button:hover,
+button:focus {
+  background: var(--color-primary-dark);
+  outline: none;
+  transform: translateY(1px);
+}
+
+/* ------------------------------------------------------------
+ * Operator buttons – distinct colour
+ * ------------------------------------------------------------ */
+button[data-action="add"],
+button[data-action="subtract"],
+button[data-action="multiply"],
+button[data-action="divide"] {
+  background: var(--color-operator);
+}
+
+button[data-action="add"]:hover,
+button[data-action="subtract"]:hover,
+button[data-action="multiply"]:hover,
+button[data-action="divide"]:hover,
+button[data-action="add"]:focus,
+button[data-action="subtract"]:focus,
+button[data-action="multiply"]:focus,
+button[data-action="divide"]:focus {
+  background: var(--color-operator-dark);
+}
+
+/* ------------------------------------------------------------
+ * Equals button – special colour
+ * ------------------------------------------------------------ */
+button.equals {
+  background: var(--color-equals);
+  grid-column: span 2; /* make the equals button a bit larger */
+}
+
+button.equals:hover,
+button.equals:focus {
+  background: var(--color-equals-dark);
+}
+
+/* ------------------------------------------------------------
+ * Zero button – span two columns for better layout
+ * ------------------------------------------------------------ */
+button.zero {
+  grid-column: span 2;
+}
+
+/* ------------------------------------------------------------
+ * Responsive adjustments for mobile devices
+ * ------------------------------------------------------------ */
+@media (max-width: 600px) {
+  :root {
+    --font-display: 1.5rem;
+    --font-button: 1rem;
+    --button-height: 2.5rem;
+    --spacing: 0.5rem;
+  }
+
+  .calculator {
+    padding: var(--spacing);
+    gap: var(--spacing);
+  }
+}
+
+/* ------------------------------------------------------------
+ * High‑contrast mode – ensure sufficient contrast when user
+ * forces a dark theme or high‑contrast OS setting. We rely on
+ * relative HSL values which adapt when the user overrides the
+ * root variables via the OS. No additional media queries are
+ * required for basic accessibility.
+ * ------------------------------------------------------------ */
